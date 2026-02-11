@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    image: my_app_image:latest
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - app_data:/usr/src/app/data
+    networks:
+      - monitoring_net
+
+  mlflow:
+    image: mlflow:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+    networks:
+      - monitoring_net
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring_net
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring_net
+
+volumes:
+  app_data:
+  mlflow_data:
+  prometheus_data:
+
+networks:
+  monitoring_net:
