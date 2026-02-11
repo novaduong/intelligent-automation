@@ -1,13 +1,8 @@
-# Development and Testing Dependencies
-
-# Development dependencies
 black
 isort
 flake8
 pytest
 pytest-cov
 mypy
-
-# Testing dependencies
 pytest-asyncio
 pytest-mock
